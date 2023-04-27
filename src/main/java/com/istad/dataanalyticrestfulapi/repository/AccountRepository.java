@@ -12,7 +12,6 @@ import java.util.List;
 @Repository
 public interface AccountRepository {
 
-
     @Results({
             @Result(property ="password" , column = "passcode"),
             @Result(property = "accountName", column = "account_name"),
@@ -26,10 +25,6 @@ public interface AccountRepository {
     @Result(property = "accountName", column = "name")
     @Select("select * from accounttype_tb where id=#{account_type}")
     AccountType getAccountTypeByID(int account_type);
-
-
-
-
 
 
     int createAccount(Account account  );

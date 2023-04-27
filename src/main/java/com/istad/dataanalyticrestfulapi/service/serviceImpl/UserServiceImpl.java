@@ -1,6 +1,7 @@
 package com.istad.dataanalyticrestfulapi.service.serviceImpl;
 
 import com.istad.dataanalyticrestfulapi.model.User;
+import com.istad.dataanalyticrestfulapi.model.UserAccount;
 import com.istad.dataanalyticrestfulapi.repository.UserRepository;
 import com.istad.dataanalyticrestfulapi.service.UserService;
 import org.springframework.stereotype.Service;
@@ -43,5 +44,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public int removeUser(int id) {
         return 0;
+    }
+
+    @Override
+    public List<UserAccount> getAllUserAccounts() {
+        return userRepository.getAllUserAccounts();
     }
 }

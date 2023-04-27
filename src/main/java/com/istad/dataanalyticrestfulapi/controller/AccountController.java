@@ -5,6 +5,7 @@ import com.istad.dataanalyticrestfulapi.mapper.AutoAccountMapper;
 import com.istad.dataanalyticrestfulapi.model.Account;
 import com.istad.dataanalyticrestfulapi.model.response.AccountResponse;
 import com.istad.dataanalyticrestfulapi.service.AccountService;
+import com.istad.dataanalyticrestfulapi.utils.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,26 +27,16 @@ public class AccountController {
         this.autoAccountMapper = autoAccountMapper;
     }
 
-
-    @GetMapping("/allaccounts")
-    public ResponseEntity<?> getAllAccounts() {
-
+    @GetMapping("/all-accounts")
+    public Response<List<AccountResponse>> getAllAccounts() {
         try {
             List<Account> allAccount = accountService.getAllAccounts();
-
-            System.out.println("All Account  now : "+ allAccount);
-
             List<AccountResponse> accountResponses = autoAccountMapper.mapToAccountResponse(allAccount);
-            HashMap<String, Object> response = new HashMap<>();
-            response.put("payload", accountResponses);
-            response.put("message", "Successfully retrieve all accounts info!");
-            response.put("status", HttpStatus.OK);
-
-            return ResponseEntity.ok().body(response);
+            return Response.<List<AccountResponse>>ok().setPayload(accountResponses).setMessage("successfully retrieved all account information ");
 
         } catch (Exception ex) {
             System.out.println("Something wrong : " + ex.getMessage());
-            return ResponseEntity.ok().body("Failed to retreived the acccounts ");
+            return Response.<List<AccountResponse>>exception().setMessage("Exception occurs! Failed to retrieved account information");
         }
 
     }

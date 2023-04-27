@@ -2,7 +2,9 @@ package com.istad.dataanalyticrestfulapi.controller;
 
 
 import com.istad.dataanalyticrestfulapi.model.User;
+import com.istad.dataanalyticrestfulapi.model.UserAccount;
 import com.istad.dataanalyticrestfulapi.service.UserService;
+import com.istad.dataanalyticrestfulapi.utils.Response;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -45,6 +47,18 @@ public class UserRestController {
 
 
 
+    }
+
+    @GetMapping("/user-accounts")
+    public Response<List<UserAccount>> getAllUserAccounts(){
+        try{
+            List<UserAccount> data = userService.getAllUserAccounts();
+            return Response.<List<UserAccount>>ok().setPayload(data).setMessage("Successfully retrieved all user accounts !");
+
+        }catch (Exception ex){
+            return Response.<List<UserAccount>>exception().setMessage("Exception occurs ! Failed to retrieved all users accounts!")
+                    .setSuccess(false);
+        }
     }
 
 
