@@ -2,6 +2,7 @@ package com.istad.dataanalyticrestfulapi.service.serviceImpl;
 
 import com.istad.dataanalyticrestfulapi.model.User;
 import com.istad.dataanalyticrestfulapi.model.UserAccount;
+import com.istad.dataanalyticrestfulapi.model.request.UserRequest;
 import com.istad.dataanalyticrestfulapi.repository.UserRepository;
 import com.istad.dataanalyticrestfulapi.service.UserService;
 import org.springframework.stereotype.Service;
@@ -32,13 +33,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int createNewUser(User user) {
+    public int createNewUser(UserRequest user) {
         return userRepository.createNewUser(user);
     }
 
     @Override
-    public int updateUser(User user) {
-        return 0;
+    public int updateUser(UserRequest user, int id ) {
+        return userRepository.updateUser(user, id);
     }
 
     @Override
