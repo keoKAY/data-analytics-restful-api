@@ -19,6 +19,7 @@ public interface UserRepository {
     @Select("select * from users_tb")
     @Result(column = "id", property = "userId")
     List<User> allUsers();
+
     List<User> findUserByUsername(String username);
     @Select("insert into users_tb (username, gender, address)\n" +
             "values (#{user.username},#{user.gender}, #{user.address}) returning id")
@@ -36,6 +37,9 @@ public interface UserRepository {
     @Result(property = "userId", column = "id")
     @Select("select  * from users_tb where id = #{id}")
     User findUserByID(int id );
+
+
+    @Delete("delete  from users_tb where id = #{id}")
     int removeUser(int id );
 
 

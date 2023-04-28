@@ -6,6 +6,7 @@ import com.istad.dataanalyticrestfulapi.model.UserAccount;
 import com.istad.dataanalyticrestfulapi.model.request.UserRequest;
 import com.istad.dataanalyticrestfulapi.service.UserService;
 import com.istad.dataanalyticrestfulapi.utils.Response;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -49,7 +50,7 @@ public class UserRestController {
     }
 
     @PostMapping("/new-user")
-    public Response<User> createUser(@RequestBody UserRequest request) {
+    public Response<User> createUser(@Valid @RequestBody UserRequest request) {
 
         try {
             int userID = userService.createNewUser(request);
@@ -84,8 +85,6 @@ public class UserRestController {
                     .setSuccess(false);
         }
     }
-
-
     // method for update the user
 
     @PutMapping("/{id}")
@@ -106,6 +105,24 @@ public class UserRestController {
             return Response.<User>exception().setMessage("Failed to update user , Exception Occurred!");
         }
 
+    }
+
+    // delete user account
+    @DeleteMapping("/{id}")
+    public Response<?> deleteUser(@PathVariable int id) {
+        try {
+            int affectedRow = userService.removeUser(id);
+            if (affectedRow > 0) {
+                // delete success
+                return Response.<Object>deleteSuccess().setMessage("Successfully remove the user ! ").setSuccess(true);
+            } else {
+                // id do not exist !
+                return Response.<Object>notFound().setMessage("User with id =" + id + " doesn't exist in our system !");
+            }
+
+        } catch (Exception ex) {
+            return Response.<Object>exception().setMessage("Exception occurred! Failed to delete the user !").setSuccess(false);
+        }
     }
 
 
