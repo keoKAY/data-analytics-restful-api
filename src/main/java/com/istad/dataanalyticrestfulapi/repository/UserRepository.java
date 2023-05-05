@@ -5,27 +5,36 @@ import com.istad.dataanalyticrestfulapi.model.Account;
 import com.istad.dataanalyticrestfulapi.model.User;
 import com.istad.dataanalyticrestfulapi.model.UserAccount;
 import com.istad.dataanalyticrestfulapi.model.request.UserRequest;
+import com.istad.dataanalyticrestfulapi.repository.provider.UserProvider;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
+
+// 1. loop queries
+// 2. providers
+// 3. pagination
+// 4. file upload
+    // 4.1 upload file
+    // 4.2 multiple upload
+    // 4.3 exception for file upload
 @Mapper
 @Repository
 public interface UserRepository {
 
+//    @Select("select * from users_tb")
 
-    @Select("select * from users_tb")
+
     @Result(column = "id", property = "userId")
-    List<User> allUsers();
+    @SelectProvider(type = UserProvider.class, method = "getAllUsers")
+    List<User> allUsers(String filterName);
 
     List<User> findUserByUsername(String username);
     @Select("insert into users_tb (username, gender, address)\n" +
             "values (#{user.username},#{user.gender}, #{user.address}) returning id")
     int createNewUser(@Param("user") UserRequest user);
-
-
 
 
     @Update("update users_tb set username=#{user.username},\n" +

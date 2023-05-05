@@ -1,6 +1,7 @@
 package com.istad.dataanalyticrestfulapi.controller;
 
 
+import com.github.pagehelper.PageInfo;
 import com.istad.dataanalyticrestfulapi.model.User;
 import com.istad.dataanalyticrestfulapi.model.UserAccount;
 import com.istad.dataanalyticrestfulapi.model.request.UserRequest;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
+// infinite scrolling
 @RestController
 @RequestMapping("/user")
 public class UserRestController {
@@ -23,13 +26,14 @@ public class UserRestController {
     }
 
     @GetMapping("/allusers")
-    public Response<List<User>> getAllUser() {
+    public Response<PageInfo<User>> getAllUser(@RequestParam (defaultValue = "1") int page, @RequestParam(defaultValue = "5") int size, @RequestParam(defaultValue = "", required = false) String  username) {
         try {
-            List<User> response = userService.allUsers();
-            return Response.<List<User>>ok().setPayload(response).setMessage("Successfully retrieved all users ! ");
+            PageInfo<User> response = userService.allUsers(page, size,username);
+            return Response.<PageInfo<User>>ok().setPayload(response).setMessage("Successfully retrieved all users ! ");
 
         } catch (Exception ex) {
-            return Response.<List<User>>exception().setMessage("Failed to retrieved the users ! Exception occurred ! ");
+            System.out.println("Exception : "+ex.getMessage());
+            return Response.<PageInfo<User>>exception().setMessage("Failed to retrieved the users ! Exception occurred ! ");
         }
 
     }

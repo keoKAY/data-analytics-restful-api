@@ -1,5 +1,7 @@
 package com.istad.dataanalyticrestfulapi.service.serviceImpl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.istad.dataanalyticrestfulapi.model.User;
 import com.istad.dataanalyticrestfulapi.model.UserAccount;
 import com.istad.dataanalyticrestfulapi.model.request.UserRequest;
@@ -18,8 +20,12 @@ public class UserServiceImpl implements UserService {
         this.userRepository = userRepository;
     }
     @Override
-    public List<User> allUsers() {
-        return userRepository.allUsers();
+    public PageInfo<User> allUsers(int page, int size, String filterName) {
+
+        // PageHelper is here
+        PageHelper.startPage(page, size);
+      return new PageInfo<>(userRepository.allUsers(filterName));
+//        return userRepository.allUsers();
     }
 
     @Override
