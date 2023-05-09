@@ -19,11 +19,12 @@ public class UserServiceImpl implements UserService {
     UserServiceImpl(UserRepository userRepository){
         this.userRepository = userRepository;
     }
+
     @Override
     public PageInfo<User> allUsers(int page, int size, String filterName) {
-
         // PageHelper is here
         PageHelper.startPage(page, size);
+        // limit and offset
       return new PageInfo<>(userRepository.allUsers(filterName));
 //        return userRepository.allUsers();
     }

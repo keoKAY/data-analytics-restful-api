@@ -1,6 +1,5 @@
 package com.istad.dataanalyticrestfulapi.controller;
 
-
 import com.github.pagehelper.PageInfo;
 import com.istad.dataanalyticrestfulapi.model.User;
 import com.istad.dataanalyticrestfulapi.model.UserAccount;
