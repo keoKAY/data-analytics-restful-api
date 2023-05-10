@@ -16,7 +16,6 @@ import java.util.Date;
 public class Transaction {
     private int id;
 //   private int senderAccountId;
-
     private UserTransaction sender ;
 //    private int receiverAccountId;
     private UserTransaction receiver;
