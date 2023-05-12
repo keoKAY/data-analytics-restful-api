@@ -1,6 +1,8 @@
 package com.istad.dataanalyticrestfulapi.service.serviceImpl;
 
 import com.istad.dataanalyticrestfulapi.service.FileStorageService;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -87,6 +89,24 @@ public class FileStorageServiceImpl implements FileStorageService {
             return "Failed to delete all files ! Exception occurred ! ";
         }
 
+
+    }
+
+    //abc.png
+    @Override
+    public Resource loadFileAsResource(String filename) throws Exception{
+        Path resourcePath = this.fileLocationStorage.resolve(filename).normalize();
+        // resource = "src/main/resources/images/abc.png
+        try{
+            Resource resource  = new UrlResource(resourcePath.toUri());
+            if(resource.exists()){
+                return resource;
+            }else  {
+                throw new Exception("Resource doesn't exist ! ");
+            }
+        }catch (Exception ex){
+            throw  new Exception("Exception Occurred!! Failed to download the image");
+        }
 
     }
 }

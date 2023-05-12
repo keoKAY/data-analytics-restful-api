@@ -11,14 +11,14 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
+//
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
-
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
 
@@ -31,4 +31,26 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 , HttpStatus.BAD_REQUEST);
 
     }
+
+
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    protected ResponseEntity<Object> handleMaxFileExceeded(MaxUploadSizeExceededException ex) {
+
+        return new ResponseEntity<>(
+                Response.<Object>badRequest().setMessage(ex.getMessage()).setSuccess(false)
+                , HttpStatus.BAD_REQUEST);
+
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    protected ResponseEntity<Object> handleIllegalArgument(IllegalArgumentException ex) {
+
+        return new ResponseEntity<>(
+                Response.<Object>badRequest().setMessage(ex.getMessage()).setSuccess(false)
+                , HttpStatus.BAD_REQUEST);
+
+    }
+    // IllegalArgumentException
+
+
 }
