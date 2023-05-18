@@ -19,10 +19,15 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
+
+// 1. apply security
+// 2. mailing service
+// // sending mail attachment
+// 3. using variable environment
+// 4. making some updates
 
 @RestController
-@RequestMapping("/file-service")
+@RequestMapping("/api/v1/file-service")
 public class FileRestController {
 
     // inject service
@@ -54,7 +59,6 @@ public class FileRestController {
 
     }
     // for delete single and multiple files
-
     @DeleteMapping("/delete-file/{filename}")
     public String deleteSingleFile(@PathVariable String filename) {
         // method definition will be written later.

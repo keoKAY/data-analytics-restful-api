@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("transaction")
+@RequestMapping("/api/v1/transaction")
 public class TransactionController {
 
     // inject service

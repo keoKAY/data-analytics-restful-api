@@ -14,7 +14,7 @@ import java.util.List;
 
 // infinite scrolling
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api/v1/user")
 public class UserRestController {
 
     // inject UserService
